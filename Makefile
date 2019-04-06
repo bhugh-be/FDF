@@ -21,8 +21,9 @@ LIB_PATH = ./libft
 LIB = ./libft/libft.a
 
 SRC  = ./srcs/fdf.c\
+		./srcs/ft_algorithm.c\
 
-INCLUDES = -I ./includes
+INCLUDES = -I ./includes -I ./libft/includes
 
 OBJ = $(SRC:.c=.o)
 

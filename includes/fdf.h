@@ -10,14 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef FDF
 #define FDF
 
 # include <mlx.h>
 # include "libft.h"
 # include <stdio.h>
+# include <math.h>
 
-int			main(void);
+// typedef struct		s_pixel
+// {
+// 	void			*win_ptr;
+// 	void 			*mlx_ptr;
+// 	int				x;
+// 	int				y;
+// 	int				c;
+// }					t_pixel;
+
+typedef struct			s_line
+{
+		double			x0;
+		double			y0;
+		double			x1;
+		double			y1;
+		int 			c0;
+		int 			c1;
+		void			*win;
+		void			*mlx;
+
+}						t_line;
+
+void					drawline(t_line *line);
 
 #endif

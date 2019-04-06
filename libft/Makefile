@@ -88,6 +88,7 @@ SRC  = ft_atoi.c \
 		ft_sqrt.c\
 		ft_max_elem.c\
 		get_next_line.c\
+		ft_swap_double.c\
 
 OBJ_DIR = ./objs
 

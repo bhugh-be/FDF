@@ -100,5 +100,6 @@ void				ft_bsort(int *arr, int l);
 size_t				ft_sqrt(size_t num);
 int					ft_max_elem(int arr[], int size);
 int					get_next_line(const int fd, char **line);
+void				ft_swap_double(double *x, double *y);
 
 #endif
