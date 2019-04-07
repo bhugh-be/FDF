@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   ft_die.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 20:41:04 by bhugh-be          #+#    #+#             */
-/*   Updated: 2018/12/04 20:41:06 by bhugh-be         ###   ########.fr       */
+/*   Created: 2019/04/07 04:45:52 by bhugh-be          #+#    #+#             */
+/*   Updated: 2019/04/07 05:07:34 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+long int         ft_die(char *error)
 {
-	if (!alst || !new)
-		return ;
-	new->next = *alst;
-	*alst = new;
+	ft_putendl(error);
+	exit (1);
 }

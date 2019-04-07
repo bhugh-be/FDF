@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_list_count.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 19:31:45 by bhugh-be          #+#    #+#             */
-/*   Updated: 2018/12/04 19:31:47 by bhugh-be         ###   ########.fr       */
+/*   Created: 2019/04/06 23:16:05 by bhugh-be          #+#    #+#             */
+/*   Updated: 2019/04/06 23:26:51 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+int             ft_list_count(t_list *begin)
 {
-	t_list *blst;
+    int         i;
 
-	if (!alst || !del)
-		return ;
-	while (*alst)
-	{
-		blst = (*alst)->next;
-		del((*alst)->content, (*alst)->content_size);
-		*alst = blst;
-		free(*alst);
-	}
-	*alst = 0;
+    i = 0;
+    while (begin)
+    {
+        begin = begin->next;
+        i++;
+    }
+    return (i);
 }

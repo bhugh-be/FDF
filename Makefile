@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/05 18:21:10 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/05 18:21:12 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/06 19:16:43 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 
 $(NAME):
 			@make -C $(LIB_PATH)
-			@gcc $(GCCFLAGS) $(SRC) $(LIB) -o $(NAME) $(INCLUDES) -lmlx -framework OpenGL -framework Appkit
+			@gcc  -g $(GCCFLAGS) $(SRC) $(LIB) -o $(NAME) $(INCLUDES) -lmlx -framework OpenGL -framework Appkit
 
 clean:
 			@make clean -C $(LIB_PATH)

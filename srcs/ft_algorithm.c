@@ -3,19 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_algorithm.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:41:35 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/05 20:41:39 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/06 21:01:04 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+void				set_pixel(char *data, int x, int y, int color)
+{
+	int 			*img;
+
+	img = (int*)data;
+	img[x + y * WIDTH] = color;
+
+}
+
 int					set_alpha(int c, double a)
 {
 	c &= ~(255 << 24);
 	c |= (int)(255 * a) << 24;
+	// int r, g, b;
+	// b = (c & (255)) * a;
+	// g = (c & (255 << 8)) * a;
+	// r = (c & (255 << 16)) * a;
+	// return (r | g | b);
+	(void)a;
 	return (c);
 }
 
@@ -81,13 +96,13 @@ void			drawline(t_line *line)
 	ypxl1 = ipart(yend);
 	if (steep)
 	{
-		mlx_pixel_put(line->mlx, line->win, ypxl1, xpxl1, set_alpha(line->c0, rfpart(yend) * xgap));
-		mlx_pixel_put(line->mlx, line->win, ypxl1+1, xpxl1, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, ypxl1, xpxl1, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, ypxl1+1, xpxl1, set_alpha(line->c0, rfpart(yend) * xgap));
 	}
 	else
 	{
-		mlx_pixel_put(line->mlx, line->win, xpxl1, ypxl1, set_alpha(line->c0, rfpart(yend) * xgap));
-		mlx_pixel_put(line->mlx, line->win, xpxl1, ypxl1+1, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, xpxl1, ypxl1, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, xpxl1, ypxl1+1, set_alpha(line->c0, rfpart(yend) * xgap));
 	}
 	intery = yend + gradient;
 	xend = round(line->x1);
@@ -97,21 +112,21 @@ void			drawline(t_line *line)
 	ypxl2 = ipart(yend);
 	if (steep)
 	{
-		mlx_pixel_put(line->mlx, line->win, ypxl2, xpxl2, set_alpha(line->c0, rfpart(yend) * xgap));
-		mlx_pixel_put(line->mlx, line->win, ypxl2+1, xpxl2, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, ypxl2, xpxl2, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, ypxl2+1, xpxl2, set_alpha(line->c0, rfpart(yend) * xgap));
 	}
 	else
 	{
-		mlx_pixel_put(line->mlx, line->win, xpxl2, ypxl2, set_alpha(line->c0, rfpart(yend) * xgap));
-		mlx_pixel_put(line->mlx, line->win, xpxl2, ypxl2+1, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, xpxl2, ypxl2, set_alpha(line->c0, fpart(yend) * xgap));
+		set_pixel(line->data, xpxl2, ypxl2+1, set_alpha(line->c0, rfpart(yend) * xgap));
 	}
 	if (steep)
 	{
 		x = xpxl1+1;
 		while (x < xpxl2)
 		{
-			mlx_pixel_put(line->mlx, line->win, ipart(intery), x, set_alpha(line->c0, rfpart(intery)));
-			mlx_pixel_put(line->mlx, line->win, ipart(intery)+1, x, set_alpha(line->c0, fpart(intery)));
+			set_pixel(line->data, ipart(intery), x, set_alpha(line->c0, fpart(intery)));
+			set_pixel(line->data, ipart(intery)+1, x, set_alpha(line->c0, rfpart(intery)));
 			intery+=gradient;
 			x++;
 		}
@@ -121,15 +136,10 @@ void			drawline(t_line *line)
 		x = xpxl1+1;
 		while (x < xpxl2)
 		{
-			mlx_pixel_put(line->mlx, line->win, x, ipart(intery), set_alpha(line->c0, rfpart(intery)));
-			mlx_pixel_put(line->mlx, line->win, x, ipart(intery)+1, set_alpha(line->c0, fpart(intery)));
+			set_pixel(line->data, x, ipart(intery), set_alpha(line->c0, fpart(intery)));
+			set_pixel(line->data, x, ipart(intery)+1, set_alpha(line->c0, rfpart(intery)));
 			intery+=gradient;
 			x++;
 		}
 	}
-
-
-
-
-
 }

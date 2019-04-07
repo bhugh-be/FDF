@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_list_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 21:42:22 by bhugh-be          #+#    #+#             */
-/*   Updated: 2018/12/04 21:42:24 by bhugh-be         ###   ########.fr       */
+/*   Created: 2019/04/06 22:46:59 by bhugh-be          #+#    #+#             */
+/*   Updated: 2019/04/06 22:59:38 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+t_list                  *ft_list_new(void *data)
 {
-	t_list *lst1;
+    t_list              *new;
 
-	if (!lst || !f)
-		return ;
-	while (lst)
-	{
-		lst1 = lst->next;
-		f(lst);
-		lst = lst1;
-	}
+    if (!(new = malloc(sizeof(t_list))))
+        return(0);
+    new->data = data;
+    new->next = NULL;
+    return (new);
 }

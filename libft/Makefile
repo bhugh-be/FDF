@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/01 17:45:44 by bhugh-be          #+#    #+#              #
-#    Updated: 2018/12/01 17:45:48 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/07 04:46:39 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,12 +72,10 @@ SRC  = ft_atoi.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
 		\
-		ft_lstnew.c\
-		ft_lstdelone.c\
-		ft_lstdel.c\
-		ft_lstadd.c\
-		ft_lstiter.c\
-		ft_lstmap.c\
+		ft_list_new.c\
+		ft_list_add.c\
+		ft_list_count.c\
+		ft_list_free.c\
 		\
 		ft_isspace.c\
 		ft_wordcount.c\
@@ -89,6 +87,9 @@ SRC  = ft_atoi.c \
 		ft_max_elem.c\
 		get_next_line.c\
 		ft_swap_double.c\
+		ft_atoi_base.c\
+		ft_vector_len.c\
+		ft_die.c\
 
 OBJ_DIR = ./objs
 

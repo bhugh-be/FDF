@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_list_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 18:57:13 by bhugh-be          #+#    #+#             */
-/*   Updated: 2018/12/04 18:57:23 by bhugh-be         ###   ########.fr       */
+/*   Created: 2019/04/06 23:31:48 by bhugh-be          #+#    #+#             */
+/*   Updated: 2019/04/06 23:39:07 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+void				ft_list_free(t_list *begin, void (*f)(void *data))
 {
-	if (!alst || !del)
-		return ;
-	del((*alst)->content, (*alst)->content_size);
-	free(*alst);
-	*alst = 0;
-	return ;
+    t_list          *tmp;
+
+    while (begin)
+    {
+        tmp = begin;
+        begin = begin->next;
+        f(tmp->data);
+        free(tmp);
+    }
 }

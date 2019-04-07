@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 20:24:02 by bhugh-be          #+#    #+#             */
-/*   Updated: 2018/11/23 20:24:05 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/07 05:07:57 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 
 typedef struct		s_list
 {
-	void			*content;
-	size_t			content_size;
+	void			*data;
 	struct s_list	*next;
 }					t_list;
 
@@ -85,12 +84,6 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-t_list				*ft_lstnew(void const *content, size_t content_size);
-void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int					ft_isspace(int ch);
 int					ft_wordcount(const char *str, char c);
 size_t				ft_strnlen(const char *str, size_t len);
@@ -101,5 +94,12 @@ size_t				ft_sqrt(size_t num);
 int					ft_max_elem(int arr[], int size);
 int					get_next_line(const int fd, char **line);
 void				ft_swap_double(double *x, double *y);
+t_list              *ft_list_new(void *data);
+void          		ft_list_add(t_list **begin, void *data);
+int             	ft_list_count(t_list *begin);
+void				ft_list_free(t_list *begin, void (*f)(void *data));
+int					ft_atoi_base(char *str, int	base);
+int					ft_vector_len(char **s);
+long int         	ft_die(char *error);
 
 #endif

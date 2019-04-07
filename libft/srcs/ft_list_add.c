@@ -1,46 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_list_add.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 18:23:25 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/06 22:43:11 by bhugh-be         ###   ########.fr       */
+/*   Created: 2019/04/06 22:59:48 by bhugh-be          #+#    #+#             */
+/*   Updated: 2019/04/07 00:41:09 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF
-#define FDF
+#include "libft.h"
 
-#define WIDTH 2000
-#define HEIGHT 1500
-
-# include <mlx.h>
-# include "libft.h"
-# include <stdio.h>
-# include <math.h>
-
-typedef struct		s_dot
+void          ft_list_add(t_list **begin, void *data)
 {
-	int				z;
-	int				c;
-}					t_dot;
+    t_list      *tmp;
+    t_list      *new;
 
-typedef struct			s_line
-{
-		double			x0;
-		double			y0;
-		double			x1;
-		double			y1;
-		int 			c0;
-		int 			c1;
-		char			*data;
-
-}	
-
-					t_line;
-
-void					drawline(t_line *line);
-
-#endif
+    if (!(new = ft_list_new(data)))
+        return ;
+    if (!(*begin))
+        *begin = new;
+    else
+    {
+        tmp = *begin;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new;
+    }
+}
