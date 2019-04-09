@@ -6,17 +6,13 @@
 #    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/01 17:45:44 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/07 04:46:39 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/08 21:16:42 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-GCCFLAGS = -Wall -Wextra -Werror
-
-SRC_DIR = $(addprefix ./srcs/,$(SRC))
-
-OBJ_DIR = objs
+CFLAGS = -Wall -Wextra -Werror
 
 SRC  = ft_atoi.c \
 		ft_bzero.c \
@@ -91,15 +87,23 @@ SRC  = ft_atoi.c \
 		ft_vector_len.c\
 		ft_die.c\
 
+SRC_DIR = ./srcs
+
 OBJ_DIR = ./objs
+
+INCLUDES = -I./includes
 
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
-all: $(NAME)
+all: $(OBJ_DIR) $(NAME)
 
-$(NAME):
-		@gcc $(GCCFLAGS) -c $(SRC_DIR) -I ./includes
-		@mkdir -p $(OBJ_DIR) && mv $(SRC:.c=.o) ./$(OBJ_DIR)
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+	
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+	
+$(NAME): $(OBJ)
 		@ar rc $(NAME) $(OBJ)
 		@ranlib $(NAME)
 

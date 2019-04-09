@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 22:16:24 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/07 06:15:44 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:55:00 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ t_list         *get_list(char *file)
 	return (begin);
 }
 
-t_dot       **get_dots(char *file, int *w, int *h)
+t_dot       **get_dots(char *file, int *h, int *w)
 {
 	t_dot   **dots;
 	t_list  *list;
-	t_list  *tmp;
+	// t_list  *tmp;
 	int     y;
 	int     x;
     char    **line;
@@ -89,6 +89,7 @@ t_dot       **get_dots(char *file, int *w, int *h)
         line = (char **)list->data;
 		while (line[x])
         {
+			dot_validation(line[x]);
             dots[y][x] = get_t_dot(line[x]);
             x++;
         }
@@ -98,21 +99,21 @@ t_dot       **get_dots(char *file, int *w, int *h)
     return (dots);
 }
 
-int         main(int ac, char ** av)
-{
-	(void)ac;
-    int     h;
-    int     w;
-    t_dot   **dot;
+// int         main(int ac, char ** av)
+// {
+// 	(void)ac;
+//     int     h;
+//     int     w;
+//     t_dot   **dot;
 
-	dot = get_dots(av[1], &h, &w);
-    for (int j = 0; j < w; j++)
-    {
-        for (int i = 0; i < h; i++)
-            printf("%3d,0x%x", dot[j][i].z, (unsigned)dot[j][i].c);
-        printf("\n");
-    }
+// 	dot = get_dots(av[1], &h, &w);
+    // for (int j = 0; j < w; j++)
+    // {
+    //     for (int i = 0; i < h; i++)
+    //         printf("%3d,0x%x", dot[j][i].z, (unsigned)dot[j][i].c);
+    //     printf("\n");
+    // }
     
-    printf ("%d\n%d\n", h, w);
-    return (0);
-	}
+//     printf ("%d\n%d\n", h, w);
+//     return (0);
+// 	}

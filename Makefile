@@ -6,32 +6,45 @@
 #    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/05 18:21:10 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/06 19:16:43 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/08 23:36:05 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-GCCFLAGS =  -Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror
 
-INCLUDES = -I ./includes
+LIB_MLX =  -lmlx -framework OpenGL -framework Appkit
 
 LIB_PATH = ./libft
 
 LIB = ./libft/libft.a
 
-SRC  = ./srcs/fdf.c\
-		./srcs/ft_algorithm.c\
+SRC  = fdf.c\
+		wu_algorithm.c\
+		validation.c\
+		drawmatrix.c\
+		hooks.c
 
 INCLUDES = -I ./includes -I ./libft/includes
 
-OBJ = $(SRC:.c=.o)
+OBJ_DIR = ./objs
 
-all: $(NAME)
+OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
-$(NAME):
+SRC_DIR = ./srcs
+
+all: $(OBJ_DIR) $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+
+$(NAME): $(OBJ)
 			@make -C $(LIB_PATH)
-			@gcc  -g $(GCCFLAGS) $(SRC) $(LIB) -o $(NAME) $(INCLUDES) -lmlx -framework OpenGL -framework Appkit
+			@gcc  -g $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) $(INCLUDES) $(LIB_MLX)
 
 clean:
 			@make clean -C $(LIB_PATH)
