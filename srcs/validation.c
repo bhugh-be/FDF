@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 22:16:24 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/08 19:55:00 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/09 20:30:23 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,34 +69,32 @@ t_list         *get_list(char *file)
 	return (begin);
 }
 
-t_dot       **get_dots(char *file, int *h, int *w)
+void       get_dots(char *file, t_values *values)
 {
-	t_dot   **dots;
 	t_list  *list;
 	// t_list  *tmp;
 	int     y;
 	int     x;
     char    **line;
 
-	*h = ft_list_count(list = get_list(file));
-	*w = ft_vector_len((char **)list->data);
-	dots = (t_dot**)malloc(sizeof(t_dot*) * *h);
+	values->h = ft_list_count(list = get_list(file));
+	values->w = ft_vector_len((char **)list->data);
+	values->dots = (t_dot**)malloc(sizeof(t_dot*) * values->h);
 	y = 0;
 	while (list)
 	{
-		dots[y] = (t_dot*)malloc(sizeof(t_dot) * *w);
+		values->dots[y] = (t_dot*)malloc(sizeof(t_dot) * values->w);
         x = 0;
         line = (char **)list->data;
 		while (line[x])
         {
 			dot_validation(line[x]);
-            dots[y][x] = get_t_dot(line[x]);
+            values->dots[y][x] = get_t_dot(line[x]);
             x++;
         }
         list = list->next;
 		y++;
 	}
-    return (dots);
 }
 
 // int         main(int ac, char ** av)

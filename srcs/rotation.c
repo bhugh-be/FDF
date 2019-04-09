@@ -6,14 +6,14 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 22:15:08 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/08 23:06:41 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/09 21:04:52 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void			rotate(t_line line)
+void			rotate(t_values *value, )
 {
-
+		
 	
 }
