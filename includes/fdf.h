@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:23:25 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/09 21:55:40 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/10 21:08:22 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 #define WIDTH 2000
 #define HEIGHT 1500
-#define SCALE 50
 #define R_KOEF 0.01 
+#define KEY_H 2
 
 #include <mlx.h>
 #include "libft.h"
@@ -55,8 +55,9 @@ typedef struct		s_values
 {
 	t_mouse			mouse;
 	t_dot			**dots;
-	int				h;
-	int				w;
+	int				keys;
+	double			h;
+	double			w;
 	char			*data;
 	void 			*mlx_ptr;
 	void 			*win_ptr;
@@ -66,6 +67,9 @@ typedef struct		s_values
 	int				endian;
 	int				dx;
 	int				dy;
+	int				offx;
+	int				offy;
+	int				scale;
 				
 }					t_values;
 
@@ -75,5 +79,8 @@ void				drawmatrix(t_values *values);
 int 				mouse_press(int button, int x, int y, void *param);
 int  				mouse_release(int button, int x, int y, void *param);
 int  				mouse_move(int x, int y, void *param);
+int 				key_press(int keycode, void *param);
+int 				key_release(int keycode, void *param);
+int 				close_window(void *param);
 
 #endif
