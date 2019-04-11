@@ -6,7 +6,7 @@
 #    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/05 18:21:10 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/10 18:12:07 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/11 20:32:51 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC  = fdf.c\
 		wu_algorithm.c\
 		validation.c\
 		drawmatrix.c\
-		hooks.c
+		hooks.c\
+		gradient.c
 
 INCLUDES = -I ./includes -I ./libft/includes
 

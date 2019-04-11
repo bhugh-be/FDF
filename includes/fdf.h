@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:23:25 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/10 21:08:22 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/11 22:22:45 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct 		s_line
 	double			z1;
 	int 			c0;
 	int 			c1;
+	int				steep;
 	char 			*data;
 
 } 					t_line;
@@ -82,5 +83,6 @@ int  				mouse_move(int x, int y, void *param);
 int 				key_press(int keycode, void *param);
 int 				key_release(int keycode, void *param);
 int 				close_window(void *param);
+int					get_color(t_line *line, int x, int y, double alpha);
 
 #endif
