@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 23:16:29 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/10 21:36:33 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/12 18:27:08 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,21 @@ int 		mouse_press(int button, int x, int y, void *param)
 	{
 		values->scale += (values->scale > 100000000)? (0) : (2);
 		drawmatrix(values);
+		mlx_clear_window(values->mlx_ptr, values->win_ptr);
 		mlx_put_image_to_window(values->mlx_ptr, values->win_ptr, values->img_ptr, 0, 0);
 	}
 	if (button == 5)
 	{
 		values->scale -= (values->scale < 1)? (0) : (2);
 		drawmatrix(values);
+		mlx_clear_window(values->mlx_ptr, values->win_ptr);
+		mlx_put_image_to_window(values->mlx_ptr, values->win_ptr, values->img_ptr, 0, 0);
+	}
+	if (button == 3)
+	{
+		set_default(values);
+		drawmatrix(values);
+		mlx_clear_window(values->mlx_ptr, values->win_ptr);
 		mlx_put_image_to_window(values->mlx_ptr, values->win_ptr, values->img_ptr, 0, 0);
 	}
 	return (0);
@@ -57,6 +66,7 @@ int  		mouse_move(int x, int y, void *param)
 		values->offx += x - values->mouse.x;
 		values->offy += y - values->mouse.y;
 		drawmatrix(values);
+		mlx_clear_window(values->mlx_ptr, values->win_ptr);
 		mlx_put_image_to_window(values->mlx_ptr, values->win_ptr, values->img_ptr, 0, 0);
 
 	}
@@ -65,6 +75,7 @@ int  		mouse_move(int x, int y, void *param)
 		values->dx += x - values->mouse.x;
 		values->dy += y - values->mouse.y;
 		drawmatrix(values);
+		mlx_clear_window(values->mlx_ptr, values->win_ptr);
 		mlx_put_image_to_window(values->mlx_ptr, values->win_ptr, values->img_ptr, 0, 0);
 	}
 	values->mouse.x = x;

@@ -6,20 +6,20 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 16:36:09 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/11 22:48:11 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/12 16:17:02 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void 		set_pixel(char *data, int x, int y, int color)
+void 		set_pixel(t_values *values, int x, int y, int color)
 {
 	int 	*img;
 
-	if (x < 0 || y < 0 || x > WIDTH - 1 || y > HEIGHT - 1)
+	if (x < 0 || y < 0 || x > values->win_w - 1 || y > values->win_h - 1)
 		return ;
-	img = (int *)data;
-	img[x + y * WIDTH] = color;
+	img = (int *)values->data;
+	img[x + y * values->win_w] = color;
 }
 
 double round(double n)
@@ -42,7 +42,7 @@ double rfpart(double n)
 	return (1 - fpart(n));
 }
 
-void drawline(t_line *line)
+void drawline(t_line *line, t_values *values)
 {
 	double dx;
 	double dy;
@@ -83,13 +83,13 @@ void drawline(t_line *line)
 	ypxl1 = ipart(yend);
 	if (line->steep)
 	{
-		set_pixel(line->data, ypxl1, xpxl1, get_color(line, ypxl1, xpxl1, fpart(yend) * xgap));
-		// set_pixel(line->data, ypxl1 + 1, xpxl1, get_color(line, rfpart(yend) * xgap));
+		set_pixel(values, ypxl1, xpxl1, get_color(line, ypxl1, xpxl1, fpart(yend) * xgap));
+		// set_pixel(values, ypxl1 + 1, xpxl1, get_color(line, rfpart(yend) * xgap));
 	}
 	else
 	{
-		set_pixel(line->data, xpxl1, ypxl1, get_color(line, xpxl1, ypxl1, fpart(yend) * xgap));
-		// set_pixel(line->data, xpxl1, ypxl1 + 1, get_color(line, rfpart(yend) * xgap));
+		set_pixel(values, xpxl1, ypxl1, get_color(line, xpxl1, ypxl1, fpart(yend) * xgap));
+		// set_pixel(values, xpxl1, ypxl1 + 1, get_color(line, rfpart(yend) * xgap));
 	}
 	intery = yend + gradient;
 	xend = round(line->x1);
@@ -99,21 +99,21 @@ void drawline(t_line *line)
 	ypxl2 = ipart(yend);
 	if (line->steep)
 	{
-		set_pixel(line->data, ypxl2, xpxl2, get_color(line, ypxl2, xpxl2, fpart(yend) * xgap));
-		// set_pixel(line->data, ypxl2 + 1, xpxl2, get_color(line, rfpart(yend) * xgap));
+		set_pixel(values, ypxl2, xpxl2, get_color(line, ypxl2, xpxl2, fpart(yend) * xgap));
+		// set_pixel(values, ypxl2 + 1, xpxl2, get_color(line, rfpart(yend) * xgap));
 	}
 	else
 	{
-		set_pixel(line->data, xpxl2, ypxl2, get_color(line, xpxl2, ypxl2, fpart(yend) * xgap));
-		// set_pixel(line->data, xpxl2, ypxl2 + 1, get_color(line, rfpart(yend) * xgap));
+		set_pixel(values, xpxl2, ypxl2, get_color(line, xpxl2, ypxl2, fpart(yend) * xgap));
+		// set_pixel(values, xpxl2, ypxl2 + 1, get_color(line, rfpart(yend) * xgap));
 	}
 	if (line->steep)
 	{
 		x = xpxl1 + 1;
 		while (x < xpxl2)
 		{
-			set_pixel(line->data, ipart(intery), x, get_color(line, ipart(intery), x, fpart(intery)));
-			set_pixel(line->data, ipart(intery) + 1, x, get_color(line, ipart(intery) + 1, x, rfpart(intery)));
+			set_pixel(values, ipart(intery), x, get_color(line, ipart(intery), x, fpart(intery)));
+			set_pixel(values, ipart(intery) + 1, x, get_color(line, ipart(intery) + 1, x, rfpart(intery)));
 			intery += gradient;
 			x++;
 		}
@@ -123,8 +123,8 @@ void drawline(t_line *line)
 		x = xpxl1 + 1;
 		while (x < xpxl2)
 		{
-			set_pixel(line->data, x, ipart(intery), get_color(line, x, ipart(intery), fpart(intery)));
-			set_pixel(line->data, x, ipart(intery) + 1, get_color(line, x, ipart(intery) + 1, rfpart(intery)));
+			set_pixel(values, x, ipart(intery), get_color(line, x, ipart(intery), fpart(intery)));
+			set_pixel(values, x, ipart(intery) + 1, get_color(line, x, ipart(intery) + 1, rfpart(intery)));
 			intery += gradient;
 			x++;
 		}

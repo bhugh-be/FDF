@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 22:16:24 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/09 20:30:23 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/12 18:38:49 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_dot       get_t_dot(char *s)
 
     dot.z = ft_atoi(s);
     dot.c = 0xffffff;
+	if (*s == '-')
+		s++;
     while (ft_isdigit(*s))
         s++;
     if (!*s)
@@ -29,7 +31,9 @@ t_dot       get_t_dot(char *s)
 
 int         dot_validation(char *str)
 {
-	while (*str >= '0' && *str <= '9') 
+	if (*str == '-' && ft_isdigit(*(str + 1)))
+		str++;
+	while (ft_isdigit(*str)) 
 		str++;
 	if (*str == 0)
 		return (1);
@@ -39,7 +43,7 @@ int         dot_validation(char *str)
 		return (ft_die("map is huita"));
 	if (*str++ != 'x')
 		return (ft_die("map is huita"));
-	while ((*str >= '0' && *str <= '9') || (*str >= 'a' && *str <= 'f') || (*str >= 'A' && *str <= 'F'))
+	while (ft_isdigit(*str) || (*str >= 'a' && *str <= 'f') || (*str >= 'A' && *str <= 'F'))
 		str++;
 	if (*str == 0)
 		return (1);
@@ -79,6 +83,14 @@ void       get_dots(char *file, t_values *values)
 
 	values->h = ft_list_count(list = get_list(file));
 	values->w = ft_vector_len((char **)list->data);
+	if ((values->win_h = values->h * 60) > 1350)
+		values->win_h = 1350;
+	if (values->win_h < 500)
+		values->win_h = 500;
+	if ((values->win_w = values->w * 50) > 2500)
+		values->win_w = 2500;
+	if (values->win_w < 700)
+		values->win_w = 700;
 	values->dots = (t_dot**)malloc(sizeof(t_dot*) * values->h);
 	y = 0;
 	while (list)
