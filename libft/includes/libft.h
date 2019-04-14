@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 20:24:02 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/07 05:07:57 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/14 22:27:39 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ void				ft_list_free(t_list *begin, void (*f)(void *data));
 int					ft_atoi_base(char *str, int	base);
 int					ft_vector_len(char **s);
 long int         	ft_die(char *error);
-
+long int            ft_max(long int a, long int b);
+long int            ft_min(long int a, long int b);
 #endif

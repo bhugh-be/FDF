@@ -6,11 +6,47 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 16:55:22 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/12 20:40:06 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/14 23:43:44 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int			cross(int a, int b, int c, int d)
+{
+	if (a > b)
+		ft_swap(&a, &b);
+	if (c > d)
+		ft_swap(&c, &d);
+	return (ft_max(a, c) <= ft_min(b, d));
+}
+
+int			cross_window(t_line *line, t_values *values)
+{
+	if (!(line->x0 > values->win_w || line->x0 < 0 || line->y0 > values->win_h || line->y0 < 0))
+		return (1);
+	if (!(line->x1 > values->win_w || line->x1 < 0 || line->y1 > values->win_h || line->y1 < 0))
+		return (1);
+	if (cross(line->x0, line->x1, 0, values->win_w) && cross(line->y0, line->y1, 0, 0) &&
+		(((line->x1 - line->x0) * (0 - line->y0) - (line->y1 - line->y0) * (0 - line->x0)) * 
+		((line->x1 - line->x0) * (values->win_w - line->y0) - (line->y1 - line->y0) * (0 - line->x0))) <= 0 && 
+		((values->win_w - 0) * (line->y0 - 0) - (0 - 0) * (line->x0 - 0)) * 
+		((values->win_w - 0) * (line->y1 - 0) - (0 - 0) * (line->x1 - 0)) <= 0)
+		return (1);
+	if (cross(line->x0, line->x1, 0, values->win_w) && cross(line->y0, line->y1, 0, 0) &&
+		(((line->x1 - line->x0) * (0 - line->y0) - (line->y1 - line->y0) * (0 - line->x0)) * 
+		((line->x1 - line->x0) * (values->win_h - line->y0) - (line->y1 - line->y0) * (0 - line->x0))) <= 0 && 
+		((values->win_w - 0) * (line->y0 - 0) - (values->win_h - 0) * (line->x0 - 0)) * 
+		((values->win_w - 0) * (line->y1 - 0) - (values->win_h - 0) * (line->x1 - 0)) <= 0)
+		return (1);
+	if (cross(line->x0, line->x1, 0, values->win_w) && cross(line->y0, line->y1, 0, 0) &&
+		(((line->x1 - line->x0) * (0 - line->y0) - (line->y1 - line->y0) * (values->win_w - line->x0)) * 
+		((line->x1 - line->x0) * (values->win_h - line->y0) - (line->y1 - line->y0) * (values->win_w - line->x0))) <= 0 && 
+		((values->win_w - values->win_w) * (line->y0 - 0) - (values->win_h - 0) * (line->x0 - values->w)) * 
+		((values->win_w - values->win_w) * (line->y1 - 0) - (values->win_h - 0) * (line->x1 - values->w)) <= 0)
+		return (1);
+	return (0);
+}
 
 void		rotate(t_line *line, t_values *values)
 {
@@ -57,8 +93,9 @@ void		drawmatrix(t_values *values)
 				line.y1 = ((j - (values->h - 1) / 2)) * values->scale;
 				line.z1 = values->dots[j][i + 1].z * values->scale;
 				line.c1 = values->dots[j][i + 1].c;
-				rotate(&line, values, values->dx, values->dy);
-				drawline(&line, values);
+				rotate(&line, values);
+				if (cross_window(&line, values))
+					drawline(&line, values);
 			}
 			line.x0 = ((i - (values->w - 1) / 2)) * values->scale;
 			line.y0 = ((j - (values->h - 1) / 2)) * values->scale;
@@ -70,8 +107,9 @@ void		drawmatrix(t_values *values)
 				line.y1 = ((j + 1 - (values->h - 1) / 2)) * values->scale;
 				line.z1 = values->dots[j + 1][i].z * values->scale;
 				line.c1 = values->dots[j + 1][i].c;
-				rotate(&line, values, values->dx, values->dy);
-				drawline(&line, values);
+				rotate(&line, values);
+				if (cross_window(&line, values))
+					drawline(&line, values);
 			}
 			i++;
 		}
