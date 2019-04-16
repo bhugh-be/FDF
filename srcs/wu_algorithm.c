@@ -6,18 +6,18 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 16:36:09 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/14 23:43:44 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/16 16:02:47 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void 		set_pixel(t_values *values, int x, int y, int color)
+void set_pixel(t_values *values, int x, int y, int color)
 {
-	int 	*img;
+	int *img;
 
 	if (x < 0 || y < 0 || x > values->win_w - 1 || y > values->win_h - 1)
-		return ;
+		return;
 	img = (int *)values->data;
 	img[x + y * values->win_w] = color;
 }

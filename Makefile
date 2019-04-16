@@ -6,15 +6,17 @@
 #    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/05 18:21:10 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/11 20:32:51 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/16 23:42:30 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-CFLAGS =  -Wall -Wextra -Werror -O3
+CFLAGS =  -Wall -Wextra -Werror -O3 -g
 
 LIB_MLX =  -lmlx -framework OpenGL -framework Appkit
+
+LIB_PORTAUDIO = -L/Users/bhugh-be/.brew/lib -lportaudio
 
 LIB_PATH = ./libft
 
@@ -25,9 +27,10 @@ SRC  = fdf.c\
 		validation.c\
 		drawmatrix.c\
 		hooks.c\
-		gradient.c
+		gradient.c\
+		equalizer.c
 
-INCLUDES = -I ./includes -I ./libft/includes
+INCLUDES = -I ./includes -I ./libft/includes -I/Users/bhugh-be/.brew/include
 
 OBJ_DIR = ./objs
 
@@ -45,7 +48,7 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 
 $(NAME): $(OBJ)
 			@make -C $(LIB_PATH)
-			@gcc  -g $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) $(INCLUDES) $(LIB_MLX)
+			@gcc  -g $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) $(INCLUDES) $(LIB_MLX) $(LIB_PORTAUDIO)
 
 clean:
 			@make clean -C $(LIB_PATH)

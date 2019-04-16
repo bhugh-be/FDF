@@ -6,20 +6,23 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:23:25 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/12 17:22:35 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:08:23 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF
 #define FDF
 
-#define R_KOEF 0.01 
+#define R_KOEF 0.01
 #define KEY_H 2
 
 #include <mlx.h>
 #include "libft.h"
+#include <portaudio.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+#include <unistd.h>
 
 typedef struct 		s_dot
 {
@@ -42,12 +45,11 @@ typedef struct 		s_line
 
 } 					t_line;
 
-typedef struct		s_mouse 
+typedef struct		s_mouse
 {
 	int				x;
 	int				y;
 	int				buttons;
-	
 }					t_mouse;
 
 typedef struct		s_values
@@ -71,7 +73,14 @@ typedef struct		s_values
 	int				scale;
 	int				win_w;
 	int				win_h;
-				
+	int				num_chanels;
+	int				sample_rate;
+	int				bytes_per_sample;
+	int				mean;
+	int				wav;
+	char			*wav_file;
+	PaStream		*stream;
+	PaSampleFormat	sampleFormat;
 }					t_values;
 
 void 				drawline(t_line *line, t_values *values);
@@ -85,5 +94,6 @@ int 				key_release(int keycode, void *param);
 int 				close_window(void *param);
 int					get_color(t_line *line, int x, int y, double alpha);
 void				set_default(t_values *values);
+int					play(t_values *values);
 
 #endif
