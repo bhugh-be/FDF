@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:23:25 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/16 22:08:23 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/18 17:36:05 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct 		s_dot
 {
 	int 			z;
+	int				hz;
 	int 			c;
 } 					t_dot;
 
@@ -57,8 +58,8 @@ typedef struct		s_values
 	t_mouse			mouse;
 	t_dot			**dots;
 	int				keys;
-	double			h;
-	double			w;
+	int				h;
+	int				w;
 	char			*data;
 	void 			*mlx_ptr;
 	void 			*win_ptr;
@@ -81,6 +82,7 @@ typedef struct		s_values
 	char			*wav_file;
 	PaStream		*stream;
 	PaSampleFormat	sampleFormat;
+	int				sync;
 }					t_values;
 
 void 				drawline(t_line *line, t_values *values);
@@ -95,5 +97,6 @@ int 				close_window(void *param);
 int					get_color(t_line *line, int x, int y, double alpha);
 void				set_default(t_values *values);
 int					play(t_values *values);
+int					draw_hook(void *param);
 
 #endif

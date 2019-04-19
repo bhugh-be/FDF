@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 20:24:02 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/14 22:27:39 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:21:52 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void				ft_swap_double(double *x, double *y);
 t_list              *ft_list_new(void *data);
 void          		ft_list_add(t_list **begin, void *data);
 int             	ft_list_count(t_list *begin);
-void				ft_list_free(t_list *begin, void (*f)(void *data));
+void				ft_list_free(t_list *begin, void (*f)(void *));
 int					ft_atoi_base(char *str, int	base);
 int					ft_vector_len(char **s);
 long int         	ft_die(char *error);

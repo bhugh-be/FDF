@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 16:55:22 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/16 16:03:44 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:52:15 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ void drawmatrix(t_values *values)
 		{
 			line.x0 = ((i - (values->w - 1) / 2)) * values->scale;
 			line.y0 = ((j - (values->h - 1) / 2)) * values->scale;
-			line.z0 = values->dots[j][i].z * values->scale;
+			line.z0 = values->dots[j][i].hz * values->scale;
 			line.c0 = values->dots[j][i].c;
 			if (i + 1 < values->w)
 			{
 				line.x1 = ((i + 1 - (values->w - 1) / 2)) * values->scale;
 				line.y1 = ((j - (values->h - 1) / 2)) * values->scale;
-				line.z1 = values->dots[j][i + 1].z * values->scale;
+				line.z1 = values->dots[j][i + 1].hz * values->scale;
 				line.c1 = values->dots[j][i + 1].c;
 				rotate(&line, values);
 				if (cross_window(&line, values))
@@ -102,13 +102,13 @@ void drawmatrix(t_values *values)
 			}
 			line.x0 = ((i - (values->w - 1) / 2)) * values->scale;
 			line.y0 = ((j - (values->h - 1) / 2)) * values->scale;
-			line.z0 = values->dots[j][i].z * values->scale;
+			line.z0 = values->dots[j][i].hz * values->scale;
 			line.c0 = values->dots[j][i].c;
 			if (j + 1 < values->h)
 			{
 				line.x1 = ((i - (values->w - 1) / 2)) * values->scale;
 				line.y1 = ((j + 1 - (values->h - 1) / 2)) * values->scale;
-				line.z1 = values->dots[j + 1][i].z * values->scale;
+				line.z1 = values->dots[j + 1][i].hz * values->scale;
 				line.c1 = values->dots[j + 1][i].c;
 				rotate(&line, values);
 				if (cross_window(&line, values))

@@ -6,11 +6,54 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 16:01:41 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/16 23:33:55 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/18 18:0:19 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int				get_mean(void *output, int s, t_values *values)
+{
+	int			i;
+	int			m;
+
+	i = 0;
+	m = 0;
+	while (i < s)
+	{
+		if (values->bytes_per_sample == 1)
+			m += *(uint8_t *)output;
+		if (values->bytes_per_sample == 2)
+			m += *(uint16_t *)output / 256;
+		if (values->bytes_per_sample == 4)
+			m += *(uint32_t *)output / 65536;
+		output = (uint8_t *)output + (values->bytes_per_sample * values->num_chanels);
+		i++;
+	}
+	return (m / s);
+}
+
+void			vizualizer(t_values *values, void *output, unsigned long fc)
+{
+	int			s;
+	int			i;
+	int			j;
+	double		res;
+
+	s = fc / values->w;
+	i = 0;
+	while (i < values->w)
+	{
+		res = (get_mean(output, s, values) / 256.0 + 0.5) * 0.7;
+		j = 0;
+		while (j < values->h)
+		{
+			values->dots[j][i].hz = (values->dots[j][i].hz + values->dots[j][i].z) / 2 * res;
+			j++;
+		}
+		i++;
+	}
+}
 
 int 			stream_callback(
 	const void *input, void *output,
@@ -27,6 +70,11 @@ int 			stream_callback(
 	values = (t_values *)userData;
 	read(values->wav, output,
 		values->bytes_per_sample * values->num_chanels * frameCount);
+
+	if (values->sync == 1)
+		return (paContinue);
+	values->sync = 1;
+	vizualizer(values, output, frameCount);
 	return paContinue;
 }
 void 			validation_wav(t_values *values)
@@ -68,20 +116,27 @@ void				port_audio_open(t_values *values)
 	out_param.channelCount = values->num_chanels;
 	out_param.sampleFormat = values->sampleFormat;
 	out_param.suggestedLatency = Pa_GetDeviceInfo( out_param.device )->defaultHighOutputLatency;
-	ret = Pa_OpenStream(&values->stream, NULL, &out_param, values->sample_rate, 
-		paFramesPerBufferUnspecified, 0, &stream_callback, values);
-	// if (ret != paNoError)
-	// {
-	// 	if (values->stream)
-	// 		Pa_CloseStream(values->stream);
-	// 	ft_die("portaidio is huita");
-	// }
-	// if (Pa_StartStream(values->stream) != paNoError)
-	// 	ft_die("portaudio is huita");
+	out_param.hostApiSpecificStreamInfo = NULL;
+	ret = Pa_OpenStream(&values->stream, NULL, &out_param, values->sample_rate,
+		paFramesPerBufferUnspecified, 0, stream_callback, values);
+	if (ret != paNoError)
+	{
+		if (values->stream)
+			Pa_CloseStream(values->stream);
+		ft_die("portaidio is huita");
+	}
+	if (Pa_StartStream(values->stream) != paNoError)
+		ft_die("portaudio is huita");
 }
 
 int				play(t_values *values)
 {
+	if (values->wav_file == 0)
+	{
+		ft_putendl("no audio.wav specified");
+		ft_putendl("usage: fdf map [audio.wav]");
+		return (0);
+	}
 	if ((values->wav = open(values->wav_file, O_RDONLY)) == -1)
 		ft_die("can't open wav");
 	validation_wav(values);

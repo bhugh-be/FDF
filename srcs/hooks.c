@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 23:16:29 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/16 16:02:36 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/18 19:03:42 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,15 @@ int key_press(int keycode, void *param)
 	values = (t_values *)param;
 	if (keycode == 53)
 		exit(0);
+	if (keycode == 35)
+	{
+		if (!values->stream)
+			play(values);
+		else if (Pa_IsStreamStopped(values->stream))
+			Pa_StartStream(values->stream);
+		else
+			Pa_StopStream(values->stream);
+	}
 	// if (keycode == 4)
 	// ;
 	return (0);
@@ -106,4 +115,17 @@ int close_window(void *param)
 {
 	(void)param;
 	exit(0);
+}
+
+int	draw_hook(void *param)
+{
+	t_values *values;
+	values = (t_values *)param;
+	if (values->sync == 0)
+		return (0);
+	values->sync = 0;
+	drawmatrix(values);
+	mlx_clear_window(values->mlx_ptr, values->win_ptr);
+	mlx_put_image_to_window(values->mlx_ptr, values->win_ptr, values->img_ptr, 0, 0);
+	return (0);
 }

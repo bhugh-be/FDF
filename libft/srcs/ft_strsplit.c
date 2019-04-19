@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 20:12:02 by bhugh-be          #+#    #+#             */
-/*   Updated: 2018/12/01 20:12:05 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:09:22 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,8 @@ static void			ft_free(char ***word)
 
 	w = *word;
 	while (*w)
-	{
-		free(*w);
-		*w++ = 0;
-	}
-	free(w);
-	w = 0;
+		free(*w++);
+	free(*word);
 }
 
 char				**ft_strsplit(char const *s, char c)
