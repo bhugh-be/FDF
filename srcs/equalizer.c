@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/16 16:01:41 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/18 18:0:19 by bhugh-be         ###   ########.fr       */
+/*   Created: 2019/04/20 20:02:26 by bhugh-be          #+#    #+#             */
+/*   Updated: 2019/04/20 20:11:56 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int				get_mean(void *output, int s, t_values *values)
 			m += *(uint16_t *)output / 256;
 		if (values->bytes_per_sample == 4)
 			m += *(uint32_t *)output / 65536;
-		output = (uint8_t *)output + (values->bytes_per_sample * values->num_chanels);
+		output = (uint8_t *)output + (values->bytes_per_sample *
+			values->num_chanels);
 		i++;
 	}
 	return (m / s);
@@ -48,36 +49,35 @@ void			vizualizer(t_values *values, void *output, unsigned long fc)
 		j = 0;
 		while (j < values->h)
 		{
-			values->dots[j][i].hz = (values->dots[j][i].hz + values->dots[j][i].z) / 2 * res;
+			values->dots[j][i].hz = (values->dots[j][i].hz +
+				values->dots[j][i].z) / 2 * res;
 			j++;
 		}
 		i++;
 	}
 }
 
-int 			stream_callback(
-	const void *input, void *output,
-	unsigned long frameCount,
-	const PaStreamCallbackTimeInfo* timeInfo,
-	PaStreamCallbackFlags statusFlags,
-	void *userData )
+int				stream_callback(const void *input, void *output,
+			unsigned long frame_count,
+			const PaStreamCallbackTimeInfo *time_info,
+			PaStreamCallbackFlags status_flags, void *user_data)
 {
 	t_values	*values;
 
 	(void)input;
-	(void)timeInfo;
-	(void)statusFlags;
-	values = (t_values *)userData;
+	(void)time_info;
+	(void)status_flags;
+	values = (t_values *)user_data;
 	read(values->wav, output,
-		values->bytes_per_sample * values->num_chanels * frameCount);
-
+		values->bytes_per_sample * values->num_chanels * frame_count);
 	if (values->sync == 1)
 		return (paContinue);
 	values->sync = 1;
-	vizualizer(values, output, frameCount);
-	return paContinue;
+	vizualizer(values, output, frame_count);
+	return (paContinue);
 }
-void 			validation_wav(t_values *values)
+
+void			validation_wav(t_values *values)
 {
 	uint16_t	buf16;
 	uint32_t	buf32;
@@ -88,10 +88,12 @@ void 			validation_wav(t_values *values)
 		(read(values->wav, &buf32, 4) != 4 || buf32 != 0x20746d66) ||
 		(read(values->wav, &buf32, 4) != 4 || buf32 != 16) ||
 		(read(values->wav, &buf16, 2) != 2 || buf16 != 1) ||
-		(read(values->wav, &values->num_chanels, 2) != 2 || !values->num_chanels) ||
+		(read(values->wav, &values->num_chanels, 2) != 2 ||
+			!values->num_chanels) ||
 		(read(values->wav, &values->sample_rate, 4) != 4) ||
 		(lseek(values->wav, 6, SEEK_CUR) == -1) ||
-		(read(values->wav, &buf16, 2) != 2 || !(values->bytes_per_sample = buf16 / 8)))
+		(read(values->wav, &buf16, 2) != 2 ||
+			!(values->bytes_per_sample = buf16 / 8)))
 		ft_die("wav is huita");
 	if (values->bytes_per_sample == 1)
 		values->sampleFormat = paInt8;
@@ -103,10 +105,10 @@ void 			validation_wav(t_values *values)
 		ft_die("wav is huita");
 }
 
-void				port_audio_open(t_values *values)
+void			port_audio_open(t_values *values)
 {
-	PaStreamParameters out_param;
-	PaError	ret;
+	PaStreamParameters	out_param;
+	PaError				ret;
 
 	if (Pa_Initialize() != paNoError)
 		ft_die("portaudio is huita");
@@ -115,7 +117,8 @@ void				port_audio_open(t_values *values)
 		ft_die("portaidio is huita");
 	out_param.channelCount = values->num_chanels;
 	out_param.sampleFormat = values->sampleFormat;
-	out_param.suggestedLatency = Pa_GetDeviceInfo( out_param.device )->defaultHighOutputLatency;
+	out_param.suggestedLatency =
+		Pa_GetDeviceInfo(out_param.device)->defaultHighOutputLatency;
 	out_param.hostApiSpecificStreamInfo = NULL;
 	ret = Pa_OpenStream(&values->stream, NULL, &out_param, values->sample_rate,
 		paFramesPerBufferUnspecified, 0, stream_callback, values);
@@ -127,19 +130,4 @@ void				port_audio_open(t_values *values)
 	}
 	if (Pa_StartStream(values->stream) != paNoError)
 		ft_die("portaudio is huita");
-}
-
-int				play(t_values *values)
-{
-	if (values->wav_file == 0)
-	{
-		ft_putendl("no audio.wav specified");
-		ft_putendl("usage: fdf map [audio.wav]");
-		return (0);
-	}
-	if ((values->wav = open(values->wav_file, O_RDONLY)) == -1)
-		ft_die("can't open wav");
-	validation_wav(values);
-	port_audio_open(values);
-	return(0);
 }

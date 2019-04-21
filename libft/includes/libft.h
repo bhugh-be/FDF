@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 20:24:02 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/19 17:21:52 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/20 21:03:10 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <math.h>
 
 typedef struct		s_list
 {
@@ -103,4 +104,9 @@ int					ft_vector_len(char **s);
 long int         	ft_die(char *error);
 long int            ft_max(long int a, long int b);
 long int            ft_min(long int a, long int b);
+double				round(double n);
+double				ipart(double n);
+double				fpart(double n);
+double				rfpart(double n);
+
 #endif

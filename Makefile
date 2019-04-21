@@ -6,13 +6,13 @@
 #    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/05 18:21:10 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/16 23:42:30 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/21 18:27:26 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-CFLAGS =  -Wall -Wextra -Werror -O3 -g
+CFLAGS =  -Wall -Wextra -Werror
 
 LIB_MLX =  -lmlx -framework OpenGL -framework Appkit
 
@@ -26,7 +26,8 @@ SRC  = fdf.c\
 		wu_algorithm.c\
 		validation.c\
 		drawmatrix.c\
-		hooks.c\
+		key_hooks.c\
+		mouse_hooks.c\
 		gradient.c\
 		equalizer.c
 

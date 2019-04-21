@@ -6,7 +6,7 @@
 #    By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/01 17:45:44 by bhugh-be          #+#    #+#              #
-#    Updated: 2019/04/14 22:27:37 by bhugh-be         ###   ########.fr        #
+#    Updated: 2019/04/20 21:04:11 by bhugh-be         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,10 @@ SRC  = ft_atoi.c \
 		ft_die.c\
 		ft_max.c\
 		ft_min.c\
+		ft_round.c\
+		ft_ipart.c\
+		ft_fpart.c\
+		ft_rfpart.c\
 
 SRC_DIR = ./srcs
 

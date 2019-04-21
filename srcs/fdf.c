@@ -6,7 +6,7 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:28:38 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/19 18:44:59 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/20 20:11:33 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ void			set_default(t_values *values)
 		values->scale = values->win_h / values->h;
 	values->dx = 0;
 	values->dy = 0;
+}
+
+int				play(t_values *values)
+{
+	if (values->wav_file == 0)
+	{
+		ft_putendl("no audio.wav specified");
+		ft_putendl("usage: fdf map [audio.wav]");
+		return (0);
+	}
+	if ((values->wav = open(values->wav_file, O_RDONLY)) == -1)
+		ft_die("can't open wav");
+	validation_wav(values);
+	port_audio_open(values);
+	return (0);
 }
 
 void			mlx_initialization(t_values *values)
@@ -52,6 +67,7 @@ int				main(int ac, char **av)
 	values->wav_file = (ac == 3) ? (av[2]) : (0);
 	get_dots(av[1], values);
 	set_default(values);
+	mlx_initialization(values);
 	drawmatrix(values);
 	mlx_put_image_to_window(values->mlx_ptr,
 		values->win_ptr, values->img_ptr, 0, 0);

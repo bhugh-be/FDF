@@ -6,11 +6,35 @@
 /*   By: bhugh-be <bhugh-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 22:01:17 by bhugh-be          #+#    #+#             */
-/*   Updated: 2019/04/19 18:34:10 by bhugh-be         ###   ########.fr       */
+/*   Updated: 2019/04/20 19:32:14 by bhugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void			free_array(void *data)
+{
+	char		**arr;
+	int			i;
+
+	arr = (char **)data;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+int			cross(int a, int b, int c, int d)
+{
+	if (a > b)
+		ft_swap(&a, &b);
+	if (c > d)
+		ft_swap(&c, &d);
+	return (ft_max(a, c) <= ft_min(b, d));
+}
 
 double		percentage(int start, int end, int current)
 {
